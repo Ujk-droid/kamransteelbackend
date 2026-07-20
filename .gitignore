@@ -1,0 +1,41 @@
+# Environment / secrets
+.env
+.env.*
+!.env.example
+token.txt
+client_secret_*.json
+*.deb
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.eggs/
+
+# Virtual environments
+venv/
+.venv/
+env/
+
+# Local databases
+*.db
+*.sqlite3
+
+# Editors / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Alembic local artifacts
+*.pyc
+
+# Claude Code local settings
+.claude/
+
+# Frontend lives in its own repo (pushed separately) — see plan in project notes
+/frontend/

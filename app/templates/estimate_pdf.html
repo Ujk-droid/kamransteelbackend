@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+    @page {
+        size: A4;
+        margin: 0;
+    }
+
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        color: {{ colors.text_primary }};
+        background-color: {{ colors.background }};
+    }
+
+    .page {
+        padding: 40px 48px;
+    }
+
+    .header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: 2px solid {{ colors.accent }};
+        padding-bottom: 20px;
+        margin-bottom: 28px;
+    }
+
+    .header-left {
+        display: flex;
+        align-items: center;
+    }
+
+    .logo {
+        height: 64px;
+        margin-right: 18px;
+    }
+
+    .company-name {
+        font-size: 22px;
+        font-weight: 700;
+        letter-spacing: 1px;
+        color: {{ colors.text_strong }};
+        text-transform: uppercase;
+        margin: 0;
+    }
+
+    .company-meta {
+        font-size: 10px;
+        color: {{ colors.text_muted }};
+        margin-top: 4px;
+        line-height: 1.5;
+        max-width: 260px;
+    }
+
+    .doc-label {
+        text-align: right;
+    }
+
+    .doc-label .title {
+        font-size: 26px;
+        font-weight: 700;
+        color: {{ colors.accent }};
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        margin: 0;
+    }
+
+    .doc-label .date {
+        font-size: 10px;
+        color: {{ colors.text_muted }};
+        margin-top: 4px;
+    }
+
+    .section-title {
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: {{ colors.accent }};
+        margin: 0 0 12px 0;
+        border-bottom: 1px solid {{ colors.border_strong }};
+        padding-bottom: 8px;
+    }
+
+    .content-row {
+        display: flex;
+        gap: 28px;
+        margin-bottom: 28px;
+    }
+
+    .content-col {
+        flex: 1;
+    }
+
+    .product-image {
+        width: 100%;
+        border: 1px solid {{ colors.border_strong }};
+        border-radius: 4px;
+        object-fit: cover;
+        max-height: 320px;
+    }
+
+    .details-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .details-table td {
+        padding: 10px 0;
+        border-bottom: 1px solid {{ colors.border_faint }};
+        font-size: 12px;
+    }
+
+    .details-table td.label {
+        color: {{ colors.text_muted }};
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        font-size: 10px;
+        width: 40%;
+    }
+
+    .details-table td.value {
+        color: {{ colors.text_strong }};
+        font-weight: 600;
+        text-align: right;
+    }
+
+    .cost-row td {
+        border-bottom: none;
+        border-top: 2px solid {{ colors.accent }};
+        padding-top: 14px;
+    }
+
+    .cost-row .label {
+        color: {{ colors.accent }};
+        font-size: 12px;
+        font-weight: 700;
+    }
+
+    .cost-row .value {
+        color: {{ colors.accent }};
+        font-size: 18px;
+        font-weight: 700;
+    }
+
+    .payment-schedule {
+        margin-top: 8px;
+    }
+
+    .payment-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .payment-table th {
+        text-align: left;
+        font-size: 10px;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+        color: {{ colors.text_muted }};
+        padding: 8px 10px;
+        border-bottom: 1px solid {{ colors.border_strong }};
+    }
+
+    .payment-table td {
+        padding: 12px 10px;
+        font-size: 12px;
+        border-bottom: 1px solid {{ colors.border_faint }};
+        color: {{ colors.text_primary }};
+    }
+
+    .payment-table tr:nth-child(even) td {
+        background-color: {{ colors.row_alt_bg }};
+    }
+
+    .payment-table .stage-name {
+        font-weight: 700;
+        color: {{ colors.text_strong }};
+    }
+
+    .payment-table .amount {
+        color: {{ colors.accent }};
+        font-weight: 700;
+        text-align: right;
+    }
+
+    .footer {
+        margin-top: 40px;
+        border-top: 1px solid {{ colors.border_strong }};
+        padding-top: 16px;
+        font-size: 9px;
+        color: {{ colors.text_faint }};
+        text-align: center;
+        letter-spacing: 0.5px;
+    }
+</style>
+</head>
+<body>
+<div class="page">
+
+    <div class="header">
+        <div class="header-left">
+            <img class="logo" src="{{ logo_base64 }}" alt="logo">
+            <div>
+                <p class="company-name">{{ company_name }}</p>
+                <div class="company-meta">
+                    {{ company_address }}<br>
+                    {{ company_phone }}
+                </div>
+            </div>
+        </div>
+        <div class="doc-label">
+            <p class="title">Estimate</p>
+            <div class="date">Date: {{ created_at }}</div>
+            <div class="date">Ref #: EST-{{ estimate_id }}</div>
+        </div>
+    </div>
+
+    <div class="content-row">
+        <div class="content-col">
+            <div class="section-title">Specification</div>
+            <table class="details-table">
+                <tr>
+                    <td class="label">Category</td>
+                    <td class="value">{{ category }}</td>
+                </tr>
+                <tr>
+                    <td class="label">Size</td>
+                    <td class="value">{{ size }}</td>
+                </tr>
+                <tr>
+                    <td class="label">Color</td>
+                    <td class="value">{{ color }}</td>
+                </tr>
+                <tr>
+                    <td class="label">Material</td>
+                    <td class="value">{{ material }}</td>
+                </tr>
+                {% for spec in extra_specs %}
+                <tr>
+                    <td class="label">{{ spec.label }}</td>
+                    <td class="value">{{ spec.value }}</td>
+                </tr>
+                {% endfor %}
+                <tr class="cost-row">
+                    <td class="label">Total Cost</td>
+                    <td class="value">Rs. {{ cost }}</td>
+                </tr>
+            </table>
+        </div>
+        <div class="content-col">
+            <div class="section-title">Preview</div>
+            {% if image_url %}
+            <img class="product-image" src="{{ image_url }}" alt="product image">
+            {% else %}
+            <div class="product-image" style="display:flex;align-items:center;justify-content:center;height:200px;color:{{ colors.text_faint }};font-size:11px;">
+                No image provided
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="payment-schedule">
+        <div class="section-title">Payment Schedule</div>
+        <table class="payment-table">
+            <thead>
+                <tr>
+                    <th>Stage</th>
+                    <th>Percentage</th>
+                    <th style="text-align:right;">Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="stage-name">Advance</td>
+                    <td>{{ advance_percent }}%</td>
+                    <td class="amount">Rs. {{ advance_amount }}</td>
+                </tr>
+                <tr>
+                    <td class="stage-name">Mid-way</td>
+                    <td>{{ mid_percent }}%</td>
+                    <td class="amount">Rs. {{ mid_amount }}</td>
+                </tr>
+                <tr>
+                    <td class="stage-name">Final</td>
+                    <td>{{ final_percent }}%</td>
+                    <td class="amount">Rs. {{ final_amount }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="footer">
+        {{ company_name }} &mdash; {{ company_address }} &mdash; {{ company_phone }}<br>
+        This is a computer-generated estimate and is subject to confirmation.
+    </div>
+
+</div>
+</body>
+</html>
