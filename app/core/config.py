@@ -21,11 +21,11 @@ class Settings(BaseSettings):
     CLOUDINARY_API_KEY: str = ""
     CLOUDINARY_API_SECRET: str = ""
 
-    # Mailtrap (email sending, used by future endpoints)
-    MAILTRAP_HOST: str = ""
-    MAILTRAP_PORT: int = 2525
-    MAILTRAP_USERNAME: str = ""
-    MAILTRAP_PASSWORD: str = ""
+    # SMTP (email sending). Defaults target Gmail SMTP; set credentials via env vars.
+    SMTP_HOST: str = "smtp.gmail.com"
+    SMTP_PORT: int = 587
+    SMTP_USERNAME: str = ""
+    SMTP_PASSWORD: str = ""
 
     # Google OAuth (admin login)
     GOOGLE_CLIENT_ID: str

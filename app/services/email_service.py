@@ -11,21 +11,21 @@ logger = logging.getLogger(__name__)
 
 
 def _send_email(subject: str, text_body: str, html_body: str) -> None:
-    """Sends an email to the admin via Mailtrap SMTP.
+    """Sends an email to the admin via SMTP.
 
     Never raises: any failure is logged and swallowed so callers can fire-and-forget.
     """
     message = MIMEMultipart("alternative")
     message["Subject"] = subject
-    message["From"] = "Kamran Steel Works <no-reply@kamransteelworks.com>"
+    message["From"] = f"Kamran Steel Works <{settings.SMTP_USERNAME}>"
     message["To"] = ", ".join(settings.admin_emails)
     message.attach(MIMEText(text_body, "plain"))
     message.attach(MIMEText(html_body, "html"))
 
     try:
-        with smtplib.SMTP(settings.MAILTRAP_HOST, settings.MAILTRAP_PORT, timeout=10) as server:
+        with smtplib.SMTP(settings.SMTP_HOST, settings.SMTP_PORT, timeout=10) as server:
             server.starttls()
-            server.login(settings.MAILTRAP_USERNAME, settings.MAILTRAP_PASSWORD)
+            server.login(settings.SMTP_USERNAME, settings.SMTP_PASSWORD)
             server.send_message(message)
     except Exception:
         logger.exception("Failed to send email: %s", subject)
