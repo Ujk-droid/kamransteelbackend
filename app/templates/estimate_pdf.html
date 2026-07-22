@@ -21,7 +21,20 @@
     }
 
     .page {
+        position: relative;
         padding: 40px 48px;
+    }
+
+    .watermark {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 460px;
+        height: 257px;
+        margin-top: -129px;
+        margin-left: -230px;
+        opacity: 0.045;
+        z-index: -1;
     }
 
     .header {
@@ -39,8 +52,8 @@
     }
 
     .logo {
-        height: 64px;
-        margin-right: 18px;
+        height: 82px;
+        margin-right: 20px;
     }
 
     .company-name {
@@ -90,6 +103,10 @@
         padding-bottom: 8px;
     }
 
+    .col-spacer {
+        height: 35px;
+    }
+
     .content-row {
         display: flex;
         gap: 28px;
@@ -111,12 +128,32 @@
     .details-table {
         width: 100%;
         border-collapse: collapse;
+        border: 1px solid {{ colors.border_faint }};
+    }
+
+    .details-table th {
+        text-align: left;
+        font-size: 10px;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+        color: {{ colors.text_muted }};
+        padding: 9px 12px;
+        border-bottom: 1px solid {{ colors.border_strong }};
+        background-color: {{ colors.row_alt_bg }};
+    }
+
+    .details-table th.value-head {
+        text-align: right;
     }
 
     .details-table td {
-        padding: 10px 0;
+        padding: 9px 12px;
         border-bottom: 1px solid {{ colors.border_faint }};
         font-size: 12px;
+    }
+
+    .details-table tbody tr:nth-child(even) td {
+        background-color: {{ colors.row_alt_bg }};
     }
 
     .details-table td.label {
@@ -124,7 +161,7 @@
         text-transform: uppercase;
         letter-spacing: 0.5px;
         font-size: 10px;
-        width: 40%;
+        width: 45%;
     }
 
     .details-table td.value {
@@ -133,19 +170,20 @@
         text-align: right;
     }
 
-    .cost-row td {
+    .details-table .cost-row td {
         border-bottom: none;
         border-top: 2px solid {{ colors.accent }};
         padding-top: 14px;
+        background-color: transparent !important;
     }
 
-    .cost-row .label {
+    .details-table .cost-row .label {
         color: {{ colors.accent }};
         font-size: 12px;
         font-weight: 700;
     }
 
-    .cost-row .value {
+    .details-table .cost-row .value {
         color: {{ colors.accent }};
         font-size: 18px;
         font-weight: 700;
@@ -153,6 +191,7 @@
 
     .payment-schedule {
         margin-top: 8px;
+        margin-bottom: 28px;
     }
 
     .payment-table {
@@ -192,19 +231,83 @@
         text-align: right;
     }
 
+    .terms-section {
+        margin-bottom: 28px;
+    }
+
+    .terms-row {
+        display: flex;
+        padding: 7px 0;
+        font-size: 11px;
+    }
+
+    .terms-row + .terms-row {
+        border-top: 1px solid {{ colors.border_faint }};
+    }
+
+    .terms-label {
+        width: 150px;
+        flex-shrink: 0;
+        color: {{ colors.text_muted }};
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        font-size: 10px;
+        font-weight: 700;
+    }
+
+    .terms-value {
+        color: {{ colors.text_primary }};
+    }
+
+    .signature-row {
+        display: flex;
+        gap: 60px;
+        margin-top: 8px;
+        margin-bottom: 8px;
+        break-inside: avoid;
+    }
+
+    .signature-box {
+        flex: 1;
+        text-align: center;
+    }
+
+    .signature-line {
+        height: 46px;
+        border-bottom: 1px solid {{ colors.border_strong }};
+    }
+
+    .signature-label {
+        margin-top: 8px;
+        font-size: 11px;
+        font-weight: 700;
+        color: {{ colors.text_strong }};
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .signature-sublabel {
+        margin-top: 2px;
+        font-size: 9px;
+        color: {{ colors.text_muted }};
+    }
+
     .footer {
-        margin-top: 40px;
+        margin-top: 28px;
         border-top: 1px solid {{ colors.border_strong }};
         padding-top: 16px;
         font-size: 9px;
         color: {{ colors.text_faint }};
         text-align: center;
         letter-spacing: 0.5px;
+        line-height: 1.7;
     }
 </style>
 </head>
 <body>
 <div class="page">
+
+    <img class="watermark" src="{{ logo_base64 }}" alt="">
 
     <div class="header">
         <div class="header-left">
@@ -228,36 +331,44 @@
         <div class="content-col">
             <div class="section-title">Specification</div>
             <table class="details-table">
-                <tr>
-                    <td class="label">Category</td>
-                    <td class="value">{{ category }}</td>
-                </tr>
-                <tr>
-                    <td class="label">Size</td>
-                    <td class="value">{{ size }}</td>
-                </tr>
-                <tr>
-                    <td class="label">Color</td>
-                    <td class="value">{{ color }}</td>
-                </tr>
-                <tr>
-                    <td class="label">Material</td>
-                    <td class="value">{{ material }}</td>
-                </tr>
-                {% for spec in extra_specs %}
-                <tr>
-                    <td class="label">{{ spec.label }}</td>
-                    <td class="value">{{ spec.value }}</td>
-                </tr>
-                {% endfor %}
-                <tr class="cost-row">
-                    <td class="label">Total Cost</td>
-                    <td class="value">Rs. {{ cost }}</td>
-                </tr>
+                <thead>
+                    <tr>
+                        <th>Field</th>
+                        <th class="value-head">Value</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="label">Category</td>
+                        <td class="value">{{ category }}</td>
+                    </tr>
+                    <tr>
+                        <td class="label">Size</td>
+                        <td class="value">{{ size }}</td>
+                    </tr>
+                    <tr>
+                        <td class="label">Color</td>
+                        <td class="value">{{ color }}</td>
+                    </tr>
+                    <tr>
+                        <td class="label">Material</td>
+                        <td class="value">{{ material }}</td>
+                    </tr>
+                    {% for spec in extra_specs %}
+                    <tr>
+                        <td class="label">{{ spec.label }}</td>
+                        <td class="value">{{ spec.value }}</td>
+                    </tr>
+                    {% endfor %}
+                    <tr class="cost-row">
+                        <td class="label">Total Cost</td>
+                        <td class="value">Rs. {{ cost }}</td>
+                    </tr>
+                </tbody>
             </table>
         </div>
         <div class="content-col">
-            <div class="section-title">Preview</div>
+            <div class="col-spacer"></div>
             {% if image_url %}
             <img class="product-image" src="{{ image_url }}" alt="product image">
             {% else %}
@@ -298,8 +409,37 @@
         </table>
     </div>
 
+    <div class="terms-section">
+        <div class="section-title">Terms &amp; Conditions</div>
+        <div class="terms-row">
+            <div class="terms-label">Delivery Time</div>
+            <div class="terms-value">as mutually agreed upon order confirmation</div>
+        </div>
+        <div class="terms-row">
+            <div class="terms-label">Material Warranty</div>
+            <div class="terms-value">as per manufacturer standards</div>
+        </div>
+        <div class="terms-row">
+            <div class="terms-label">Estimate Validity</div>
+            <div class="terms-value">15 days from the date above</div>
+        </div>
+    </div>
+
+    <div class="signature-row">
+        <div class="signature-box">
+            <div class="signature-line"></div>
+            <div class="signature-label">Customer Signature</div>
+        </div>
+        <div class="signature-box">
+            <div class="signature-line"></div>
+            <div class="signature-label">Authorized Signature</div>
+            <div class="signature-sublabel">{{ company_name }}</div>
+        </div>
+    </div>
+
     <div class="footer">
         {{ company_name }} &mdash; {{ company_address }} &mdash; {{ company_phone }}<br>
+        {{ company_website }} &mdash; WhatsApp: {{ company_whatsapp }} &mdash; {{ company_email }}<br>
         This is a computer-generated estimate and is subject to confirmation.
     </div>
 

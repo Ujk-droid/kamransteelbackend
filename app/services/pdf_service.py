@@ -41,6 +41,9 @@ COMPANY_ADDRESS = (
     "Near Agha Khan School, Solder Bazar No-1, Karachi"
 )
 COMPANY_PHONE = "0300-2882134 / 0345-6167188"
+COMPANY_WEBSITE = "kamransteelfrontend.vercel.app"
+COMPANY_WHATSAPP = "0345-6167188"
+COMPANY_EMAIL = "kamransteelw@gmail.com"
 
 _env = Environment(loader=FileSystemLoader(str(TEMPLATES_DIR)))
 
@@ -65,6 +68,9 @@ def render_estimate_pdf(estimate: Estimate, theme: str = "dark") -> bytes:
         company_name=COMPANY_NAME,
         company_address=COMPANY_ADDRESS,
         company_phone=COMPANY_PHONE,
+        company_website=COMPANY_WEBSITE,
+        company_whatsapp=COMPANY_WHATSAPP,
+        company_email=COMPANY_EMAIL,
         logo_base64=_logo_data_uri(),
         estimate_id=estimate_read.id,
         created_at=estimate_read.created_at.strftime("%B %d, %Y"),
